@@ -3,11 +3,15 @@ import ArrowRight from "../../../assets/icons/ArrowRight.svg";
 
 type ButtonProps = {
   title: string;
+  onPress?: () => void;
 };
-export default function ButtonTailwind({ title }: ButtonProps) {
+export default function ButtonTailwind({ title, onPress }: ButtonProps) {
   return (
     <View className="relative">
-      <TouchableOpacity className="bg-[#5669FF] px-4 py-5 rounded-2xl items-center justify-center">
+      <TouchableOpacity
+        className="bg-[#5669FF] px-4 py-5 rounded-2xl items-center justify-center"
+        onPress={onPress}
+      >
         {/* Texto centralizado */}
         <Text className="text-white text-center font-bold text-2xl">
           {title}

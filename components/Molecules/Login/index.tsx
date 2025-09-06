@@ -1,4 +1,4 @@
-import { Switch, Text, TouchableOpacity, View } from "react-native";
+import { Switch, Text, View } from "react-native";
 // import MessageEmail from "../../assets/icons/MessageEmail.svg";
 // import PasswordIcon from "../../assets/icons/PasswordIcon.svg";
 import ButtonDefault from "@/components/Atoms/buttonDefault";
@@ -14,7 +14,10 @@ export default function LoginAuth() {
   const [isForget, setIsForget] = useState(false);
   const toggleSwitch = () => setIsForget((previousState) => !previousState);
 
-  const redirectTo = (screen: "home" | "menu2") => {
+  const redirectTo = (
+    screen: "01-home" | "02-analytics" | "03-ranking" | "04-profile"
+  ) => {
+    console.log("Redirecionando para:", screen);
     router.push(`/(tabs)/${screen}`);
   };
 
@@ -58,11 +61,10 @@ export default function LoginAuth() {
         </View>
         <Text className="ml-2 text-black text-lg"> Esqueceu a senha?</Text>
       </View>
-      <TouchableOpacity onPress={() => redirectTo("home")}>
-        <View className="p-6 ">
-          <ButtonDefault title={"Logar"} />
-        </View>
-      </TouchableOpacity>
+
+      <View className="p-6 ">
+        <ButtonDefault title="Logar" onPress={() => redirectTo("01-home")} />
+      </View>
     </View>
   );
 }
