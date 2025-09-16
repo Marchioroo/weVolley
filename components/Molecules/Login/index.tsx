@@ -1,12 +1,11 @@
-import { Switch, Text, View } from "react-native";
-// import MessageEmail from "../../assets/icons/MessageEmail.svg";
-// import PasswordIcon from "../../assets/icons/PasswordIcon.svg";
-import ButtonDefault from "@/components/Atoms/buttonDefault";
+import MyButton from "@/components/Atoms/MyButton";
 import { router } from "expo-router";
 import { useState } from "react";
+import { Switch, Text, View } from "react-native";
+import ArrowRight from "../../../assets/icons/ArrowRight.svg";
 import MessageEmail from "../../../assets/icons/MessageEmail.svg";
 import PasswordIcon from "../../../assets/icons/PasswordIcon.svg";
-import InputText from "../../InputText";
+import InputText from "../InputText";
 
 export default function LoginAuth() {
   const [password, setPassword] = useState("");
@@ -14,11 +13,8 @@ export default function LoginAuth() {
   const [isForget, setIsForget] = useState(false);
   const toggleSwitch = () => setIsForget((previousState) => !previousState);
 
-  const redirectTo = (
-    screen: "01-home" | "02-analytics" | "03-ranking" | "04-profile"
-  ) => {
-    console.log("Redirecionando para:", screen);
-    router.push(`/(tabs)/${screen}`);
+  const redirectTo = () => {
+    router.push("/01-home");
   };
 
   return (
@@ -63,7 +59,13 @@ export default function LoginAuth() {
       </View>
 
       <View className="p-6 ">
-        <ButtonDefault title="Logar" onPress={() => redirectTo("01-home")} />
+        <MyButton
+          title="Logar"
+          icon={<ArrowRight width={14} height={14} />}
+          onPress={() => redirectTo()}
+          classNameText="text-2xl"
+          type="primary"
+        />
       </View>
     </View>
   );

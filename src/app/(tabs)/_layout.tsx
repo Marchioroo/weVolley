@@ -1,95 +1,103 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import React, { memo, useMemo } from "react";
 import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import Analytics from "../../../assets/icons/Analytics.svg";
 import HomeIcon from "../../../assets/icons/Home.svg";
 import Profile from "../../../assets/icons/Profile.svg";
+import Search from "../../../assets/icons/Search.svg";
+
+const ACTIVE = "#C85B2C";
+const ACTIVE_BG = "#f7c5af";
+const INACTIVE = "#888";
+const BAR_BG = "#212121";
+
+const IconBadge = memo(function IconBadge({
+  focused,
+  children,
+}: {
+  focused: boolean;
+  children: React.ReactNode;
+}) {
+  const style = useMemo(
+    () => ({
+      backgroundColor: focused ? ACTIVE_BG : "transparent",
+      borderRadius: 50,
+      padding: 12,
+    }),
+    [focused]
+  );
+  return <View style={style}>{children}</View>;
+});
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
+      initialRouteName="01-home"
       screenOptions={{
         headerShown: false,
+        tabBarHideOnKeyboard: true,
+        tabBarActiveTintColor: ACTIVE,
+        tabBarInactiveTintColor: INACTIVE,
         tabBarStyle: {
-          paddingTop: 16,
-          height: 90,
-          backgroundColor: "#1D1F24",
+          paddingTop: 14,
+          paddingBottom: Math.max(10, insets.bottom), // respeita home bar
+          height: 66 + Math.max(10, insets.bottom), // evita “pulo”
+          backgroundColor: BAR_BG,
           borderTopWidth: 0,
         },
-        tabBarActiveTintColor: "#539DF3",
-        tabBarInactiveTintColor: "#888",
+        tabBarShowLabel: false,
       }}
     >
       <Tabs.Screen
         name="01-home"
         options={{
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, focused }) => (
-            <View
-              style={{
-                backgroundColor: focused ? "#2F4369" : "transparent",
-                borderRadius: 50,
-                padding: 12,
-              }}
-            >
+          tabBarIcon: ({ focused, color }) => (
+            <IconBadge focused={focused}>
+              {/* Muitos SVGs usam fill. Troque para stroke se for o caso */}
               <HomeIcon
                 width={25}
                 height={24}
-                color={focused ? "#60A5FA" : color}
+                fill={focused ? ACTIVE : color}
               />
-            </View>
+            </IconBadge>
           ),
         }}
       />
       <Tabs.Screen
         name="02-analytics"
         options={{
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, focused }) => (
-            <View
-              style={{
-                backgroundColor: focused ? "#2F4369" : "transparent",
-                borderRadius: 50,
-                padding: 12,
-              }}
-            >
-              <Analytics width={25} height={24} color={color} />
-            </View>
+          tabBarIcon: ({ focused, color }) => (
+            <IconBadge focused={focused}>
+              <Analytics
+                width={25}
+                height={24}
+                fill={focused ? ACTIVE : color}
+              />
+            </IconBadge>
           ),
         }}
       />
       <Tabs.Screen
         name="03-ranking"
         options={{
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, focused, size }) => (
-            <View
-              style={{
-                backgroundColor: focused ? "#2F4369" : "transparent",
-                borderRadius: 50,
-                padding: 12,
-              }}
-            >
-              <Ionicons name="trophy-outline" color={color} size={size} />
-            </View>
+          tabBarIcon: ({ focused, color }) => (
+            <IconBadge focused={focused}>
+              <Search width={25} height={24} fill={focused ? ACTIVE : color} />
+            </IconBadge>
           ),
         }}
       />
       <Tabs.Screen
         name="04-profile"
         options={{
-          tabBarShowLabel: false,
-          headerPressOpacity: 1,
-          tabBarIcon: ({ color, focused }) => (
-            <View
-              style={{
-                backgroundColor: focused ? "#2F4369" : "transparent",
-                borderRadius: 50,
-                padding: 12,
-              }}
-            >
-              <Profile width={25} height={24} color={color} />
-            </View>
+          tabBarIcon: ({ focused, color }) => (
+            <IconBadge focused={focused}>
+              <Profile width={25} height={24} fill={focused ? ACTIVE : color} />
+            </IconBadge>
           ),
         }}
       />
