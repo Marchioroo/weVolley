@@ -11,7 +11,7 @@ import Search from "../../../assets/icons/Search.svg";
 const ACTIVE = "#C85B2C";
 const ACTIVE_BG = "#f7c5af";
 const INACTIVE = "#888";
-const BAR_BG = "#212121";
+const BAR_BG = "#eee";
 
 const IconBadge = memo(function IconBadge({
   focused,
@@ -62,6 +62,7 @@ export default function TabLayout() {
                 width={25}
                 height={24}
                 fill={focused ? ACTIVE : color}
+                color={focused ? ACTIVE : color} // para SVGs que usam stroke
               />
             </IconBadge>
           ),
@@ -76,6 +77,7 @@ export default function TabLayout() {
                 width={25}
                 height={24}
                 fill={focused ? ACTIVE : color}
+                color={focused ? ACTIVE : color}
               />
             </IconBadge>
           ),
@@ -86,7 +88,12 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ focused, color }) => (
             <IconBadge focused={focused}>
-              <Search width={25} height={24} fill={focused ? ACTIVE : color} />
+              <Search
+                width={25}
+                height={24}
+                fill={focused ? ACTIVE : color}
+                color={focused ? ACTIVE : color}
+              />
             </IconBadge>
           ),
         }}
@@ -96,7 +103,12 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ focused, color }) => (
             <IconBadge focused={focused}>
-              <Profile width={25} height={24} fill={focused ? ACTIVE : color} />
+              <Profile
+                width={25}
+                height={24}
+                fill={focused ? ACTIVE : color}
+                color={focused ? ACTIVE : color}
+              />
             </IconBadge>
           ),
         }}

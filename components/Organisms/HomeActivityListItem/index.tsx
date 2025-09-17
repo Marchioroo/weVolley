@@ -7,22 +7,22 @@ const MOCK_USERS = [
     id: "1",
     name: "Alfred Owen",
     avatarUrl: "https://i.pravatar.cc/100?img=12",
-    calories: 400,
-    steps: "2.1k",
+    calories: 40,
+    steps: "2.1",
   },
   {
     id: "2",
     name: "Linh Nguyen",
     avatarUrl: "https://i.pravatar.cc/100?img=32",
-    calories: 680,
-    steps: "4.1k",
+    calories: 32,
+    steps: "4.1",
   },
   {
     id: "3",
     name: "Maria Silva",
     avatarUrl: "https://i.pravatar.cc/100?img=47",
-    calories: 520,
-    steps: "3.2k",
+    calories: 27,
+    steps: "3.2",
   },
 ];
 
@@ -32,7 +32,7 @@ export default function HomeActivityUsersList() {
       data={MOCK_USERS}
       keyExtractor={(item) => item.id}
       contentContainerStyle={{ padding: 16 }}
-      scrollEnabled={false} // 👈 desliga o scroll do FlatList
+      scrollEnabled={false}
       renderItem={({ item }) => (
         <TouchableOpacity
           activeOpacity={0.8}
@@ -57,21 +57,21 @@ export default function HomeActivityUsersList() {
                 className="text-sm text-gray-500"
                 style={{ fontFamily: "CircularStd" }}
               >
-                {item.calories} Calories
+                {item.calories} Vitórias
               </Text>
             </View>
           </View>
 
           <View className="flex-row items-center gap-2">
             <Text
-              className="text-base"
+              className="text-sm"
               style={{
                 fontFamily: "CircularStd",
                 fontWeight: "700",
                 color: "#111827",
               }}
             >
-              {item.steps} Steps
+              <Text className="text-lg">{item.steps}</Text> V / D
             </Text>
           </View>
         </TouchableOpacity>

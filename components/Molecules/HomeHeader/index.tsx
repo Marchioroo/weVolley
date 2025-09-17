@@ -6,7 +6,7 @@ export default function HomeHeader() {
   const profileImage = "https://i.pravatar.cc/150?img=5";
 
   return (
-    <View className="w-full h-28  flex-row items-center justify-between px-4">
+    <View className="w-full flex-row items-center justify-between px-4">
       <View className="flex-row items-center">
         <View className="w-16 h-16 rounded-full bg-[#B9B6FF] border-2 border-white overflow-hidden relative">
           <Image

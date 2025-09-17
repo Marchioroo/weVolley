@@ -9,19 +9,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   return (
-    <SafeAreaView
-      className="flex-1  h-[1000px]  bg-white"
-      edges={["top", "left", "right"]}
-    >
-      <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
-        <View className="relative flex-1 flex items-center justify-center font-circular">
-          <View className="absolute top-0 left-0 w-full px-4">
-            <HomeHeader />
-            <HomeSectionHeader title="Seus Jogos" subtitle="Setembro, 2025" />
-            <HomeInformations />
-            <HomeSectionHeader title="Seus amigos" subtitle="Ranking" />
-            <HomeActivityUsersList />
-          </View>
+    <SafeAreaView className="flex-1 bg-white" edges={["top", "left", "right"]}>
+      <ScrollView
+        className="flex-1"
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 24 }}
+        showsVerticalScrollIndicator
+      >
+        <View className="flex-1">
+          <HomeHeader />
+          <HomeSectionHeader title="Seus Jogos" subtitle="Setembro, 2025" />
+          <HomeInformations />
+          <HomeSectionHeader title="Seus amigos" subtitle="Ranking" />
+          <HomeActivityUsersList />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -12,7 +12,7 @@ export default function HomeInformations() {
   return (
     <View className="px-3 h-[300px] w-full flex-row gap-2">
       <View className="flex-1 flex-col gap-2">
-        <View className="flex-1 border border-gray-100 rounded-2xl">
+        <View className="flex-1 border border-gray-200 rounded-2xl">
           <View className="flex flex-row justify-between items-center py-2 px-2">
             <Text
               className="font-semibold text-xl"
@@ -34,7 +34,7 @@ export default function HomeInformations() {
           </View>
         </View>
 
-        <View className="flex-1 border border-gray-100 rounded-2xl">
+        <View className="flex-1 border border-gray-200 rounded-2xl">
           <View className="flex flex-row justify-between items-center p-2">
             <Text
               className="font-semibold text-xl"
@@ -57,7 +57,7 @@ export default function HomeInformations() {
       </View>
 
       <View className="flex-1 relative">
-        <View className="h-full border border-gray-100 rounded-2xl p-2">
+        <View className="h-full border border-gray-200 rounded-2xl p-2">
           <Text
             style={{ fontFamily: "CircularStd", fontSize: 20 }}
             className="font-semibold text-gray-900"
