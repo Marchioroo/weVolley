@@ -1,15 +1,19 @@
-// app/(tabs)/01-home/_layout.tsx
+import Header from "@/components/Molecules/Header";
 import { Stack } from "expo-router";
+import { View } from "react-native";
 
 export default function AnalyticsStackLayout() {
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        animation: "fade", // 👈 transição suave entre telas desta aba
-        // animationDuration não é exposto aqui; a duração é a padrão do RN
-        // Caso precise, dá para ajustar por-navegação usando Reanimated/gestures.
-      }}
-    />
+    <View style={{ flex: 1 }}>
+      <Header />
+      <View style={{ flex: 1, paddingTop: 60 }}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            animation: "fade",
+          }}
+        />
+      </View>
+    </View>
   );
 }

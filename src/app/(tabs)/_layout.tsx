@@ -24,7 +24,7 @@ const IconBadge = memo(function IconBadge({
     () => ({
       backgroundColor: focused ? ACTIVE_BG : "transparent",
       borderRadius: 50,
-      padding: 12,
+      padding: 8, // 🔽 reduzido para deixar a bolha menor
     }),
     [focused]
   );
@@ -43,9 +43,9 @@ export default function TabLayout() {
         tabBarActiveTintColor: ACTIVE,
         tabBarInactiveTintColor: INACTIVE,
         tabBarStyle: {
-          paddingTop: 14,
-          paddingBottom: Math.max(10, insets.bottom), // respeita home bar
-          height: 66 + Math.max(10, insets.bottom), // evita “pulo”
+          paddingTop: 6,
+          paddingBottom: Math.max(6, insets.bottom), // 🔽 menor
+          height: 52 + Math.max(0, insets.bottom), // 🔽 altura total reduzida
           backgroundColor: BAR_BG,
           borderTopWidth: 0,
         },
@@ -57,12 +57,11 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ focused, color }) => (
             <IconBadge focused={focused}>
-              {/* Muitos SVGs usam fill. Troque para stroke se for o caso */}
               <HomeIcon
-                width={25}
-                height={24}
+                width={22} // 🔽 reduzido
+                height={22}
                 fill={focused ? ACTIVE : color}
-                color={focused ? ACTIVE : color} // para SVGs que usam stroke
+                color={focused ? ACTIVE : color}
               />
             </IconBadge>
           ),
@@ -74,8 +73,8 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, color }) => (
             <IconBadge focused={focused}>
               <Analytics
-                width={25}
-                height={24}
+                width={22}
+                height={22}
                 fill={focused ? ACTIVE : color}
                 color={focused ? ACTIVE : color}
               />
@@ -89,8 +88,8 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, color }) => (
             <IconBadge focused={focused}>
               <Search
-                width={25}
-                height={24}
+                width={22}
+                height={22}
                 fill={focused ? ACTIVE : color}
                 color={focused ? ACTIVE : color}
               />
@@ -104,8 +103,8 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, color }) => (
             <IconBadge focused={focused}>
               <Profile
-                width={25}
-                height={24}
+                width={22}
+                height={22}
                 fill={focused ? ACTIVE : color}
                 color={focused ? ACTIVE : color}
               />

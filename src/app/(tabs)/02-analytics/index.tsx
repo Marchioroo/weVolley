@@ -1,5 +1,5 @@
 import AnalyticsCardGame from "@/components/Organisms/AnalyticsCardGame";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, ScrollView, Text, View } from "react-native";
 
 export default function Analytics() {
   const cards = [
@@ -29,47 +29,69 @@ export default function Analytics() {
     },
   ];
 
-  const ITEM_WIDTH = 300;
+  const ITEM_WIDTH = 330;
   const SPACING = 12;
   const SNAP = ITEM_WIDTH + SPACING;
 
   return (
-    <View className="flex-1 h-full w-full bg-white p-4">
-      <Text
-        className="font-semibold text-xl mb-3 mt-4 px-2"
-        style={{ fontFamily: "CircularStd" }}
-      >
-        Seus grupos
-      </Text>
+    <>
+      <View className="flex-1 h-full w-full bg-white px-4">
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingBottom: 16,
+          }}
+        >
+          <View>
+            <View className="flex flex-row justify-between items-center">
+              <Text
+                className="font-semibold text-2xl mb-6 mt-4 px-2"
+                style={{ fontFamily: "CircularStd" }}
+              >
+                Meus grupos
+              </Text>
+              <Text className="text-sm text-[#F97316]">Ver todos</Text>
+            </View>
 
-      <FlatList
-        data={cards}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingRight: 16 }}
-        ItemSeparatorComponent={() => <View style={{ width: SPACING }} />}
-        decelerationRate="fast"
-        snapToInterval={SNAP}
-        snapToAlignment="start"
-        disableIntervalMomentum
-        renderItem={({ item }) => (
-          <View style={{ width: ITEM_WIDTH }}>
-            <AnalyticsCardGame {...item} />
+            <FlatList
+              data={cards}
+              keyExtractor={(item) => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingRight: 16 }}
+              ItemSeparatorComponent={() => <View style={{ width: SPACING }} />}
+              decelerationRate="fast"
+              snapToInterval={SNAP}
+              snapToAlignment="start"
+              disableIntervalMomentum
+              renderItem={({ item }) => (
+                <View style={{ width: ITEM_WIDTH }}>
+                  <AnalyticsCardGame {...item} />
+                </View>
+              )}
+              getItemLayout={(_, index) => ({
+                length: SNAP,
+                offset: SNAP * index,
+                index,
+              })}
+            />
           </View>
-        )}
-        getItemLayout={(_, index) => ({
-          length: SNAP,
-          offset: SNAP * index,
-          index,
-        })}
-      />
-      <Text
-        className="font-semibold text-xl mb-3 mt-4 px-2"
-        style={{ fontFamily: "CircularStd" }}
-      >
-        Seus grupos
-      </Text>
-    </View>
+
+          <View>
+            <Text
+              className="font-semibold text-2xl mb-6 px-2"
+              style={{ fontFamily: "CircularStd" }}
+            >
+              Conheça outros grupos
+            </Text>
+            <View>
+              {cards.map((card) => (
+                <AnalyticsCardGame key={card.id} {...card} />
+              ))}
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    </>
   );
 }
