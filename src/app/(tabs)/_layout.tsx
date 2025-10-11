@@ -45,7 +45,7 @@ export default function TabLayout() {
         tabBarStyle: {
           paddingTop: 6,
           paddingBottom: Math.max(6, insets.bottom), // 🔽 menor
-          height: 52 + Math.max(0, insets.bottom), // 🔽 altura total reduzida
+          height: 40 + Math.max(0, insets.bottom), // 🔽 altura total reduzida
           backgroundColor: BAR_BG,
           borderTopWidth: 0,
         },

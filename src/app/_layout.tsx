@@ -1,15 +1,13 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { ActivityIndicator, StatusBar, StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler"; // 👈 importa aqui
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {} from "../styles/global.css";
 
 export default function RootLayout() {
-  // 👇 Carregando a fonte custom
   const [fontsLoaded] = useFonts({
     CircularStd: require("../../assets/fonts/circular-std-medium-500.ttf"),
-    // você pode adicionar outras variações aqui, ex:
-    // CircularStdBold: require("../assets/fonts/circular-std-bold-700.ttf"),
   });
 
   if (!fontsLoaded) {
@@ -21,24 +19,26 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView edges={["top", "bottom"]} style={styles.container}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor="#fff"
-          translucent={false}
-        />
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: "#fff" },
-          }}
-        >
-          <Stack.Screen name="login" />
-          <Stack.Screen name="(tabs)" />
-        </Stack>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <SafeAreaView edges={["top", "bottom"]} style={styles.container}>
+          <StatusBar
+            barStyle="dark-content"
+            backgroundColor="#fff"
+            translucent={false}
+          />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: "#fff" },
+            }}
+          >
+            <Stack.Screen name="login" />
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 

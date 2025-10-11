@@ -1,61 +1,91 @@
 import AnalyticsCardGame from "@/components/Organisms/AnalyticsCardGame";
-import { FlatList, ScrollView, Text, View } from "react-native";
+import {
+  useFetchMyGroups,
+  useFetchOtherGroups,
+  useLoadingGroups,
+  useMyGroups,
+  useOtherGroups,
+} from "@/stores/useGroupStore";
+import { GroupItem } from "@/types/GroupsType";
+import { router } from "expo-router";
+import React, { useCallback, useEffect, useMemo } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function Analytics() {
-  const cards = [
-    {
-      id: "1",
-      title: "Torneio de Setembro",
-      nextMatchDate: "20/09/2025",
-      duration: "1h30min",
-      participants: 18,
-      imageUrl: "https://picsum.photos/800/320?random=1",
-    },
-    {
-      id: "2",
-      title: "Campeonato Primavera",
-      nextMatchDate: "05/10/2025",
-      duration: "2h",
-      participants: 24,
-      imageUrl: "https://picsum.photos/800/320?random=2",
-    },
-    {
-      id: "3",
-      title: "Copa dos Amigos",
-      nextMatchDate: "12/11/2025",
-      duration: "1h45min",
-      participants: 12,
-      imageUrl: "https://picsum.photos/800/320?random=3",
-    },
-  ];
+  const myGroups = useMyGroups();
+  const otherGroups = useOtherGroups();
+  const loadingGroups = useLoadingGroups();
+
+  const fetchMyGroups = useFetchMyGroups();
+  const fetchOtherGroups = useFetchOtherGroups();
+
+  useEffect(() => {
+    (async () => {
+      await Promise.all([fetchMyGroups(), fetchOtherGroups()]);
+    })();
+  }, [fetchMyGroups, fetchOtherGroups]);
 
   const ITEM_WIDTH = 330;
   const SPACING = 12;
-  const SNAP = ITEM_WIDTH + SPACING;
+  const SNAP = useMemo(() => ITEM_WIDTH + SPACING, []);
+  const keyExtractor = useCallback((item: GroupItem) => String(item.id), []);
+
+  const handlePress = useCallback((id: number) => {
+    router.push(`/PageCardGame/${id}`);
+  }, []);
+
+  const renderMyGroupItem = useCallback(
+    ({ item }: { item: GroupItem }) => (
+      <View style={{ width: ITEM_WIDTH }}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => handlePress(item.id)}
+        >
+          <AnalyticsCardGame {...item} />
+        </TouchableOpacity>
+      </View>
+    ),
+    [handlePress]
+  );
+
+  const renderOtherGroupItem = useCallback(
+    ({ item }: { item: GroupItem }) => <AnalyticsCardGame {...item} />,
+    []
+  );
+
+  if (loadingGroups) {
+    return (
+      <View className="flex-1 justify-center items-center bg-white">
+        <ActivityIndicator size="large" color="#F97316" />
+        <Text className="mt-4 text-gray-600">Carregando grupos...</Text>
+      </View>
+    );
+  }
 
   return (
-    <>
-      <View className="flex-1 h-full w-full bg-white px-4">
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom: 16,
-          }}
-        >
-          <View>
-            <View className="flex flex-row justify-between items-center">
+    <View className="flex-1 bg-white px-4">
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <View className="flex flex-row justify-between items-center mt-4 px-2 mb-4">
               <Text
-                className="font-semibold text-2xl mb-6 mt-4 px-2"
+                className="font-semibold text-2xl"
                 style={{ fontFamily: "CircularStd" }}
               >
-                Meus grupos
+                Meus grupos ({myGroups.length})
               </Text>
               <Text className="text-sm text-[#F97316]">Ver todos</Text>
             </View>
 
             <FlatList
-              data={cards}
-              keyExtractor={(item) => item.id}
+              data={myGroups}
+              keyExtractor={keyExtractor}
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{ paddingRight: 16 }}
@@ -64,34 +94,29 @@ export default function Analytics() {
               snapToInterval={SNAP}
               snapToAlignment="start"
               disableIntervalMomentum
-              renderItem={({ item }) => (
-                <View style={{ width: ITEM_WIDTH }}>
-                  <AnalyticsCardGame {...item} />
-                </View>
-              )}
-              getItemLayout={(_, index) => ({
-                length: SNAP,
-                offset: SNAP * index,
-                index,
-              })}
+              renderItem={renderMyGroupItem}
+              windowSize={3}
+              initialNumToRender={3}
+              maxToRenderPerBatch={5}
+              removeClippedSubviews
             />
-          </View>
 
-          <View>
-            <Text
-              className="font-semibold text-2xl mb-6 px-2"
-              style={{ fontFamily: "CircularStd" }}
-            >
-              Conheça outros grupos
-            </Text>
-            <View>
-              {cards.map((card) => (
-                <AnalyticsCardGame key={card.id} {...card} />
-              ))}
+            <View className="mt-8 mb-4 px-2">
+              <Text
+                className="font-semibold text-2xl"
+                style={{ fontFamily: "CircularStd" }}
+              >
+                Conheça outros grupos ({otherGroups.length})
+              </Text>
             </View>
-          </View>
-        </ScrollView>
-      </View>
-    </>
+          </>
+        }
+        data={otherGroups}
+        keyExtractor={keyExtractor}
+        renderItem={renderOtherGroupItem}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 32, gap: 12 }}
+      />
+    </View>
   );
 }

@@ -1,14 +1,6 @@
+import { Card } from "@/types/GameCard";
 import { Image } from "expo-image";
 import { Text, View } from "react-native";
-
-type GameCard = {
-  id: string;
-  title: string;
-  nextMatchDate: string;
-  duration: string;
-  participants: number;
-  imageUrl: string;
-};
 
 export default function AnalyticsCardGame({
   title,
@@ -16,7 +8,7 @@ export default function AnalyticsCardGame({
   duration,
   participants,
   imageUrl,
-}: GameCard) {
+}: Card) {
   const avatars = [
     "https://i.pravatar.cc/100?img=1",
     "https://i.pravatar.cc/100?img=2",
